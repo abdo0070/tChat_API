@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+    }
+
+    nav {
+      background-color: #eee;
+      padding: 10px;
+      text-align: center;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .error-message {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Login Page</h1>
+  </header>
+
+  <nav>
+    <a href="#" onclick="showLogin()">Login</a>
+    <a href="#" onclick="showRegister()">Register</a>
+  </nav>
+
+  <div class="login-container" id="loginContainer">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="button" onclick="validateLogin()">Login</button>
+    </form>
+
+    <div id="errorMessage" class="error-message"></div>
+  </div>
+
+  <!-- Add a similar container for registration -->
+  <div class="login-container" id="registerContainer" style="display: none;">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <!-- Add registration form fields as needed -->
+
+      <button type="button" onclick="registerUser()">Register</button>
+    </form>
+
+    <div id="registerErrorMessage" class="error-message"></div>
+  </div>
+
+  <script>
+    function showLogin() {
+      document.getElementById('loginContainer').style.display = 'block';
+      document.getElementById('registerContainer').style.display = 'none';
+    }
+
+    function showRegister() {
+      document.getElementById('loginContainer').style.display = 'none';
+      document.getElementById('registerContainer').style.display = 'block';
+    }
+
+    function validateLogin() {
+      const usernameInput = document.getElementById('username');
+      const passwordInput = document.getElementById('password');
+      const errorMessage = document.getElementById('errorMessage');
+
+      const username = usernameInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      // Simulate a basic login validation (replace this with actual logic)
+      if (username === 'user' && password === 'password') {
+        // Successful login
+        alert('Login successful!');
+      } else {
+        // Display error message
+        errorMessage.textContent = 'Invalid username or password. Please try again.';
+      }
+    }
+
+    // Function to handle registration (add actual registration logic)
+    function registerUser() {
+      const registerErrorMessage = document.getElementById('registerErrorMessage');
+      registerErrorMessage.textContent = 'Registration functionality not implemented in this example.';
+    }
+  </script>
+</body>
+</html>
