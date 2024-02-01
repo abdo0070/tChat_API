@@ -7,7 +7,7 @@ class UserModel {
   }
   static async create(data) {
     validateData(data);
-    const sqlQuery = `insert into users values(null,"${data.user_name}","${data.email}","${data.password}","${data.image}","${data.token}",null)`;
+    const sqlQuery = `insert into users values(null,"${data.user_name}","${data.email}","${data.password}","${data.image}",null,null)`;
     const [result, fields] = await pool.query(sqlQuery);
     return fields;
   }
@@ -21,16 +21,23 @@ class UserModel {
     const [rows, fields] = await pool.query(sqlQuery);
     return rows;
   }
-  static async updateToken(id,token) {
+  static async updateToken(id, token) {
     const sqlQuery = `UPDATE users SET token = "${token}" WHERE id = ${id}`;
     const [result, fields] = await pool.query(sqlQuery);
     return result;
   }
-  static delete(id) {
-
-  }
+  static delete(id) {}
 }
 
-const validateData = (data) => {};
+const validateData = (data) => {
+  if (
+    data.user_name == undefined ||
+    data.image == undefined ||
+    data.email == undefined ||
+    data.password == undefined
+  ) {
+    throw Error("Invalid data");
+  }
+};
 
 module.exports = UserModel;

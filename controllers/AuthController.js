@@ -1,9 +1,10 @@
+const Wrapper = require("../middleware/asyncWrapper");
 const UserModel = require("../model/UserModel");
 const gentrateJWT = require("../utils/gentrateJWT");
 const UserController = require("./UserController");
 
 class AuthController {
-  static async login(req, res) {
+  static login = Wrapper(async (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const result = await UserModel.sql(
@@ -20,25 +21,32 @@ class AuthController {
       });
       await UserModel.updateToken(user.id, token);
       token = await UserController.getToken(user.id);
+      res.cookie("token", token, {
+        httpOnly: true,
+        maxAge: 1000,
+      });
       return res.json({
         status: "success",
         message: "Authentication successful",
-        token: token
+        token: token,
       });
     } else {
       res.status(401).json({
         error: "Unauthorized",
         message: "Invalid email or password",
+        data: {
+          ...req.body,
+        },
       });
     }
-  }
-  static register() {
-    /**
-     * 1 - validate on the request body data
-     * 2 - if the data is valid create user
-     * 3 - return the user in the response
-     */
-  }
+  });
+  static register = Wrapper(async (req, res, next) => {
+    // create user
+    await UserModel.create(req.body);
+    return res.status(201).json({
+      message: "success",
+    });
+  });
 }
 
 module.exports = AuthController;

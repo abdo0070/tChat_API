@@ -6,11 +6,9 @@ const verifyJWT = require("../middleware/verifyJWT");
 // Login Route 
 apiRouter.route("/api/login")
 .post(AuthController.login)
-.get((req,res) => {
-  res.status();
-})
 // Register Route
-
+apiRouter.route("/api/register")
+.post(AuthController.register)
 // For Users Route
 apiRouter
   .route("/api/users")

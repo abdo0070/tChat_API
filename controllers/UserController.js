@@ -1,43 +1,32 @@
 const UserModel = require("../model/UserModel");
 const gentrateJWT = require("../utils/gentrateJWT");
+const Wrapper = require("../middleware/asyncWrapper");
 
 class UserController {
-  static async all(req, res) {
+  static async all(req, res, next) {
     const user = await UserModel.all();
     res.json(user);
   }
-  static async get(req, res) {
+  static get = Wrapper(async (req, res, next) => {
     const { id } = req.params;
     const user = await this.getUser(id);
     res.json(user);
-  }
-  static async store(req, res) {
-    const token = await gentrateJWT({
-      user_name: req.body.user_name,
-      email: req.body.email,
-      role: 0,
-    });
-    const data = {
-      ...req.body,
-      token,
-    };
-    const user = await UserModel.create(data);
-    res.status(202).json(user);
-  }
-  static async updateToken(req, res) {
-  }
-  static async romove(req, res) {
-    const { id } = req.params;
-    try {
-      const [result, fields] = await UserModel.delete(id);
-      res.json(result); // Respond with the result, not 'res'
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
+  });
 
-  static async getUser(id){
+  static store = Wrapper(async (req, res, next) => {
+    const user = await UserModel.create(req.body);
+    res.status(202).json(user);
+  });
+
+  static async updateToken(req, res) {}
+
+  static romove = Wrapper(async (req, res) => {
+    const { id } = req.params;
+    const [result, fields] = await UserModel.delete(id);
+    res.json(result);
+  });
+
+  static getUser = async (id) => {
     let user = await UserModel.get(id);
     user = user[0];
     const data = {
@@ -47,12 +36,12 @@ class UserController {
       image: user.image,
     };
     return data;
-  }
-  static async getToken(id){
+  };
+
+  static getToken = async (id) => {
     let user = await UserModel.get(id);
     user = user[0];
     return user.token;
-  }
+  };
 }
-
 module.exports = UserController;
