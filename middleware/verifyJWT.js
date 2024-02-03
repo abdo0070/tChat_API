@@ -4,8 +4,7 @@ const verifyJWT = async (req, res, next) => {
   try {
     token = token.split(" ")[1];
     console.log('Cookies: ', req.cookies)
-    const result = await verify(token,process.env.JWT_SECRET_KEY);
-    console.log(result);
+    res.payload = await verify(token,process.env.JWT_SECRET_KEY);
     next();
   } catch (error) {
     return res.status(403).json({

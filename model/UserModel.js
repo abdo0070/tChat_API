@@ -26,7 +26,12 @@ class UserModel {
     const [result, fields] = await pool.query(sqlQuery);
     return result;
   }
-  static delete(id) {}
+
+  static async getByUserName(user_name){
+    const sqlQuery = `select * from users where user_name like "%${user_name}%"`;
+    const [row, fields] = await pool.query(sqlQuery);
+    return row;
+  }
 }
 
 const validateData = (data) => {

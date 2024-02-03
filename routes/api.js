@@ -1,5 +1,6 @@
 const apiRouter = require("express").Router();
 const AuthController = require("../controllers/AuthController");
+const FreindContoller = require("../controllers/FreindsController");
 const UserController = require("../controllers/UserController");
 const verifyJWT = require("../middleware/verifyJWT");
 
@@ -18,6 +19,17 @@ apiRouter
 apiRouter
   .route("/api/users/:id")
   .get(UserController.get)
-  .delete(UserController.romove)
+
+// Freinds Route 
+apiRouter.route("/api/freinds")
+.post(verifyJWT,FreindContoller.addFreind)
+
+apiRouter.route("/api/freinds")
+.get(verifyJWT,FreindContoller.freindList)
+
+// search
+apiRouter.route("/api/search/:user_name")
+.get(verifyJWT,UserController.getByUserName);
+
 
 module.exports = apiRouter;

@@ -18,12 +18,10 @@ class UserController {
     res.status(202).json(user);
   });
 
-  static async updateToken(req, res) {}
-
-  static romove = Wrapper(async (req, res) => {
-    const { id } = req.params;
-    const [result, fields] = await UserModel.delete(id);
-    res.json(result);
+  static getByUserName = Wrapper(async (req, res, next) => {
+    const {user_name} = req.params;
+    const users = await UserModel.getByUserName(user_name);
+    res.json(users);
   });
 
   static getUser = async (id) => {
