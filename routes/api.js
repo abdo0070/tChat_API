@@ -1,6 +1,8 @@
 const apiRouter = require("express").Router();
 const AuthController = require("../controllers/AuthController");
 const FreindContoller = require("../controllers/FreindsController");
+const MessageController = require("../controllers/MessageController");
+const RoomController = require("../controllers/RoomController");
 const UserController = require("../controllers/UserController");
 const verifyJWT = require("../middleware/verifyJWT");
 
@@ -31,5 +33,11 @@ apiRouter.route("/api/freinds")
 apiRouter.route("/api/search/:user_name")
 .get(verifyJWT,UserController.getByUserName);
 
+// Message
+apiRouter.route("/api/messages")
+.post(MessageController.addMessage)
+
+apiRouter.route("/api/messages/:room_id")
+.get(MessageController.loadMessages)
 
 module.exports = apiRouter;

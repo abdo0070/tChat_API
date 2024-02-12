@@ -11,7 +11,10 @@ class FreindModel {
     }
   }
   static async all(user_id) {
-    const sqlQuery = `select users.user_name , users.image from freinds , users where freinds.user_id = ${user_id} and freinds.freind_id = users.id`;
+    const sqlQuery = `
+    select users.user_name , users.image , freinds.room_id
+    from freinds , users
+    where freinds.user_id = ${user_id} and freinds.freind_id = users.id`;
     const [rows, fields] = await pool.query(sqlQuery);
     return rows;
   }
