@@ -34,7 +34,24 @@ function start() {
   server.listen(9000, () => {
     console.log("server is listening");
   });
-  io.on("connection", ServerController.newConnection);
+  io.on("connection", (socket) => {
+    console.log("a user connected", socket.id);
+
+    socket.on("JoinRoom", (room_id) => {
+      socket.join(`${room_id}`);
+    });
+    socket.on("message", async (room_id,data) => {
+      /*
+       * save the message to the DB
+       * broadcast the message
+       */ 
+      io.to(`${room_id}`).emit('newMessage',data);
+      // const res = await MessageController.addMessage(data);
+    });
+    socket.on("disconnect", () => {
+      console.log("user disconnected " + socket.id);
+    });
+  });
 }
 
 start();
