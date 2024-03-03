@@ -14,7 +14,7 @@ class ServerController {
        * broadcast the message
        */ 
       io.to(`${room_id}`).emit('newMessage',data);
-      // const res = await MessageController.addMessage(data);
+      const res = await MessageController.addMessage(data);
     });
     socket.on("disconnect", () => {
       console.log("user disconnected " + socket.id);

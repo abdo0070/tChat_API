@@ -11,6 +11,7 @@ const corsOptions = require("./middleware/corsOptions");
 const { Server } = require("socket.io");
 const http = require("http");
 const ServerController = require("./controllers/ServerContoller");
+const MessageController = require("./controllers/MessageController");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
@@ -46,9 +47,10 @@ function start() {
        * broadcast the message
        */ 
       io.to(`${room_id}`).emit('newMessage',data);
-      // const res = await MessageController.addMessage(data);
+      const res = await MessageController.addMessage(data);
     });
-    socket.on("disconnect", () => {
+    socket.on("disconnect", () => { 
+      // feature
       console.log("user disconnected " + socket.id);
     });
   });
