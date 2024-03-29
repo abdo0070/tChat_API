@@ -1,6 +1,7 @@
 const UserModel = require("../model/UserModel");
 const gentrateJWT = require("../utils/gentrateJWT");
 const Wrapper = require("../middleware/asyncWrapper");
+const FreindContoller = require("./FreindsController");
 
 class UserController {
   static async all(req, res, next) {
@@ -8,6 +9,7 @@ class UserController {
     res.json(user);
   }
   static get = Wrapper(async (req, res, next) => {
+    //O(n log(n))
     const { id } = req.params;
     const user = await this.getUser(id);
     res.json(user);
@@ -19,9 +21,14 @@ class UserController {
   });
 
   static getByUserName = Wrapper(async (req, res, next) => {
-    const {user_name} = req.params;
-    const users = await UserModel.getByUserName(user_name);
-    res.json(users);
+    const { user_name } = req.params;
+    const { id } = res.payload;
+    let users = (await UserModel.getByUserName(user_name)) || []; // O (n log(n) )
+    users = await Promise.all(users.map(async (user) => {
+    user.is_freind = await FreindContoller.isFreind(id, user.id);
+    return user;
+  }));
+    return res.json(users);
   });
 
   static getUser = async (id) => {
@@ -40,6 +47,10 @@ class UserController {
     let user = await UserModel.get(id);
     user = user[0];
     return user.token;
+  };
+
+  static newUser = async (user,id) => {
+    
   };
 }
 module.exports = UserController;

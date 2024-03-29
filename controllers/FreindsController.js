@@ -8,14 +8,17 @@ class FreindContoller {
   });
 
   static addFreind = Wrapper(async (req, res, next) => {
-    const result = await FreindModel.create(
-      req.body.user_id,
-      req.body.freind_id
-    );
+    const {id} = res.payload;
+    const result = await FreindModel.create(3,9);
     return res.json({
+      data : req.bod,
       msg: "created succes",
     });
   });
+
+  static isFreind = async (user_id,freind_id) => {
+    return FreindModel.checkIfFreind(user_id,freind_id);
+  }
 
   static freindList = Wrapper(async (req, res, next) => {
     const {id} = res.payload;
