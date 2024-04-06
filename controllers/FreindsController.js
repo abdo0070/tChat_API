@@ -1,6 +1,6 @@
 const { verify } = require("jsonwebtoken");
 const Wrapper = require("../middleware/asyncWrapper");
-const FreindModel = require("../model/FreindModel");
+const FreindModel = require("../model/ChatModel");
 
 class FreindContoller {
   static sendMessage = Wrapper(async (req, res, next) => {

@@ -6,6 +6,7 @@ class MessageController {
   static addMessage = async (data) => {
     // Send The Incoming message .
     // create the Server Controller .
+    console.log("the data"+data);
     const { message, room_id , user_id} = data;
     return await MessageModel.create(message,room_id,user_id);
   };

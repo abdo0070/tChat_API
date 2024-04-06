@@ -42,7 +42,8 @@ function start() {
       socket.join(`${room_id}`);
     });
     socket.on("message", async (room_id,data) => {
-      io.to(`${room_id}`).emit('newMessage',data);
+      io.to(`${1}`).emit('newMessage',data);
+      console.log("New Message " + 1);
       const res = await MessageController.addMessage(data);
     });
     socket.on("disconnect", () => {

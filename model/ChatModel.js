@@ -1,9 +1,9 @@
 const pool = require("../db/connection.js");
 
-class FreindModel {
-  static async create(user_id, freind_id) {
+class ChatModel {
+  static async create(user_id, room_id) {
     try {
-      const sqlQuery = `insert into freinds values(${user_id},${freind_id})`;
+      const sqlQuery = `insert into chats values(${user_id},${room_id})`;
       const [result, fields] = await pool.query(sqlQuery);
       return fields;
     } catch (error) {
@@ -11,10 +11,11 @@ class FreindModel {
     }
   }
   static async all(user_id) {
-    const sqlQuery = `
-    select users.user_name ,freinds.freind_id, users.image , freinds.room_id
-    from freinds , users
-    where freinds.user_id = ${user_id} and freinds.freind_id = users.id`;
+    // get all chatRooms for specific user ...
+    const sqlQuery = ` select r.id , c.name
+    from rooms r , chats c , users u
+    where u.id = ${user_id} and r.id = c.room_id and c.user_id = ${user_id}
+    `;
     const [rows, fields] = await pool.query(sqlQuery);
     return rows;
   }
@@ -28,4 +29,4 @@ class FreindModel {
   }
 }
 
-module.exports = FreindModel;
+module.exports = ChatModel;
