@@ -27,7 +27,7 @@ class ChatModel {
   static async CommonChat(user_id, freind_id) {
     const sqlQuery = `select c.room_id from chats c where ${user_id} = c.user_id and ${freind_id} = c.freind_id`;
     const [row, fields] = await pool.query(sqlQuery);
-    return row[0];
+    return row[0]?.room_id;
   }
 }
 

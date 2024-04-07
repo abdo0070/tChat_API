@@ -42,9 +42,9 @@ function start() {
       socket.join(`${room_id}`);
     });
     socket.on("message", async (room_id,data) => {
-      io.to(`${1}`).emit('newMessage',data);
-      console.log("New Message " + 1);
-      const res = await MessageController.addMessage(data);
+      console.log("New Message " + room_id);
+      await MessageController.addMessage(data);
+      io.to(`${room_id}`).emit('newMessage',data);
     });
     socket.on("disconnect", () => {
       console.log("user disconnected " + socket.id);

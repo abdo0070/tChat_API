@@ -8,21 +8,20 @@ class FreindContoller {
   });
 
   static getChat = Wrapper(async (req, res, next) => {
-    const {id} = res.payload;
-    const {freind_id} = req.body;
-    let roomID =  await ChatModel.CommonChat(id,freind_id);
-    if(!roomID){
+    const { id } = res.payload;
+    const { freind_id } = req.body;
+    let roomID = await ChatModel.CommonChat(id, freind_id);
+    if (!roomID) {
       // create room for this two users ...
-    roomID = await RoomModel.create();  
-    roomID = roomID.room_id;  
-    await ChatModel.create(id,freind_id,roomID);
-    await ChatModel.create(freind_id,id,roomID);
+      roomID = await RoomModel.create();
+      await ChatModel.create(id, freind_id, roomID);
+      await ChatModel.create(freind_id, id, roomID);
     }
-    return res.json(roomID);    
+    return res.json({ room_id: roomID });
   });
 
   static freindList = Wrapper(async (req, res, next) => {
-    const {id} = res.payload;
+    const { id } = res.payload;
     const freinds = await ChatModel.all(id);
     res.json(freinds);
   });
