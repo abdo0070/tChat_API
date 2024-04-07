@@ -29,7 +29,7 @@ class UserModel {
 
   static async getByUserName(user_name){
     const sqlQuery = `
-    select id , user_name , image
+    select id as user_id , user_name , image
     from users
     where user_name like "%${user_name}%"`;
     const [row, fields] = await pool.query(sqlQuery);

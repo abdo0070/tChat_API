@@ -1,7 +1,7 @@
 const UserModel = require("../model/UserModel");
 const gentrateJWT = require("../utils/gentrateJWT");
 const Wrapper = require("../middleware/asyncWrapper");
-const FreindContoller = require("./FreindsController");
+const FreindContoller = require("./ChatController");
 
 class UserController {
   static async all(req, res, next) {
@@ -25,7 +25,7 @@ class UserController {
     const { id } = res.payload;
     let users = (await UserModel.getByUserName(user_name)) || []; // O (n log(n) )
     users = await Promise.all(users.map(async (user) => {
-    user.is_freind = await FreindContoller.isFreind(id, user.id);
+    // user.is_freind = await FreindContoller.isFreind(id, user.id);
     return user;
   }));
     return res.json(users);

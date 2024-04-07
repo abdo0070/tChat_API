@@ -1,6 +1,6 @@
 const apiRouter = require("express").Router();
 const AuthController = require("../controllers/AuthController");
-const FreindContoller = require("../controllers/FreindsController");
+const FreindContoller = require("../controllers/ChatController");
 const MessageController = require("../controllers/MessageController");
 const RoomController = require("../controllers/RoomController");
 const UserController = require("../controllers/UserController");
@@ -22,9 +22,9 @@ apiRouter
   .route("/api/users/:id")
   .get(UserController.get)
 
-// Freinds Route 
-apiRouter.route("/api/freinds")
-.post(verifyJWT,FreindContoller.addFreind)
+// Chat Route 
+apiRouter.route("/api/chats")
+.post(verifyJWT,FreindContoller.getChat)
 
 apiRouter.route("/api/freinds")
 .get(verifyJWT,FreindContoller.freindList)

@@ -17,7 +17,7 @@ class RoomModel {
     where messages.room_id = ${room_id} and rooms.id = ${room_id} and messages.user_id = users.id;
         `;
     const [result, fields] = await pool.query(sqlQuery);
-    return result;
+    return result[0].room_id;
   };
 }
 
