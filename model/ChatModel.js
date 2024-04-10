@@ -17,7 +17,7 @@ class ChatModel {
   }
   static async all(user_id) {
     // get all chatRooms for specific user ...
-    const sqlQuery = ` select r.id , c.name
+    const sqlQuery = ` select r.id , c.name , u.image
     from rooms r , chats c , users u
     where u.id = ${user_id} and r.id = c.room_id and c.user_id = ${user_id}
     `;
