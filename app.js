@@ -14,7 +14,7 @@ const MessageController = require("./controllers/MessageController");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://turbochat.netlify.app/",
+    origin: "https://turbochat.netlify.app",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true

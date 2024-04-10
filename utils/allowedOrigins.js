@@ -1,5 +1,5 @@
 const allowedOrigins = [
-    'https://turbochat.netlify.app/'
+    'https://turbochat.netlify.app'
 ]
 
 
