@@ -10,7 +10,6 @@ const corsOptions = require("./middleware/corsOptions");
 // init the socket server
 const { Server } = require("socket.io");
 const http = require("http");
-const ServerController = require("./controllers/ServerContoller");
 const MessageController = require("./controllers/MessageController");
 const server = http.createServer(app);
 const io = new Server(server, {
